@@ -3,7 +3,7 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
-import { findIndex, filter } from 'lodash';
+// import { findIndex, filter } from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from './actions/index';
 

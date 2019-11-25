@@ -8,7 +8,7 @@ class TaskForm extends Component {
 		this.state={
 			id: '',
 			name: '',
-			status: false
+			status: true
 		}
 	}
 
