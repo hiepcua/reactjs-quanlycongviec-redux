@@ -3,7 +3,6 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import Control from './components/Control';
 import TaskList from './components/TaskList';
-// import { findIndex, filter } from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from './actions/index';
 
@@ -11,33 +10,43 @@ class App extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			taskEditting: null,
-			keyword: '',
+			id: '',
+			name: '',
+			status: false,
 			sortBy: 'name',
 			sortValue: 1
 		}
 	}
 
-	onToogleForm = () => {
-		this.props.onToggleForm();
+	onAddNewTask = () => {
+		this.onClear();
+		this.props.onOpenForm();
 	}
 
-	onShowForm = () => {
+	// onShowForm = () => {
+	// 	this.setState({
+	// 		isDisplayForm : true
+	// 	})
+	// }
+
+	// onUpdate = (id) => {
+	// 	var { tasks } = this.state;
+	// 	var index = this.findIndex(id);
+	// 	var taskEditting = tasks[index];
+
+	// 	this.setState({
+	// 		taskEditting: taskEditting
+	// 	});
+
+	// 	this.onShowForm();
+	// }
+
+	onClear = () =>{
 		this.setState({
-			isDisplayForm : true
+			id: '',
+			name: '',
+			status: false
 		})
-	}
-
-	onUpdate = (id) => {
-		var { tasks } = this.state;
-		var index = this.findIndex(id);
-		var taskEditting = tasks[index];
-
-		this.setState({
-			taskEditting: taskEditting
-		});
-
-		this.onShowForm();
 	}
 
 	findIndex = (id) => {
@@ -65,7 +74,7 @@ class App extends Component {
 	}
 
 	render(){
-		var { taskEditting, sortBy, sortValue, /*keyword*/ } = this.state;
+		var { sortBy, sortValue } = this.state;
 
 		var { isDisplayForm } = this.props;
 
@@ -93,8 +102,6 @@ class App extends Component {
 		// }
 		
 
-		var elmTaskForm = isDisplayForm ? <TaskForm task={ taskEditting } /> : '';
-
 		return (
 			<div className="wrapper">
 				<div className="container">
@@ -105,13 +112,13 @@ class App extends Component {
 			        <div className="row">
 			            <div className={ isDisplayForm ? 'col-xs-4 col-sm-4' : '' }>
 			            	{/* Form */}
-			                { elmTaskForm }
+			                <TaskForm />
 			            </div>
 			            <div className={isDisplayForm ? 'col-xs-8 col-sm-8 col-md-8 col-lg-8' : 'col-xs-12 col-sm-12 col-md-12 col-lg-12' }>
 			                <button 
 				                type="button" 
 				                className="btn btn-primary"
-				                onClick={ this.onToogleForm }
+				                onClick={ this.onAddNewTask }
 			                >
 			                    <span className="fa fa-plus mr-5"></span>Thêm Công Việc
 			                </button>
@@ -124,7 +131,7 @@ class App extends Component {
 			                />
 			            	{/* List */}
 			                <TaskList
-			                	onUpdate={ this.onUpdate }
+			                	// onUpdate={ this.onUpdate }
 			                	onFilter={ this.onFilter }
 			                	onUpdateKeyword={ this.state.keyword }
 			                />
@@ -144,11 +151,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, props) => {
 	return {
-		onToggleForm: () => {
-			dispatch(actions.toggleForm());
-		},
-		onCloseForm: () => {
-			dispatch(actions.closeForm());
+		onOpenForm: () => {
+			dispatch(actions.openForm());
 		}
 	}
 }
